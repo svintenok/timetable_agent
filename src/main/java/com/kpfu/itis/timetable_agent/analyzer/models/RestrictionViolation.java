@@ -3,7 +3,7 @@ package com.kpfu.itis.timetable_agent.analyzer.models;
 public abstract class RestrictionViolation {
 
     protected boolean hard;
-    protected double weight;
+    protected double  priority;
 
     public abstract String warningString();
 
@@ -12,6 +12,6 @@ public abstract class RestrictionViolation {
     }
 
     public double getWeight() {
-        return weight;
+        return priority;
     }
 }

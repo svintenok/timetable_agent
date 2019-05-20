@@ -16,23 +16,20 @@ public class GroupTimeslotResourceRestriction extends RestrictionViolation {
     private Group group;
     private Timeslot timeslot;
 
-    public GroupTimeslotResourceRestriction(Group group, Timeslot timeslot, double weight) {
+    public GroupTimeslotResourceRestriction(Group group, Timeslot timeslot) {
         super();
         this.group = group;
         this.timeslot = timeslot;
 
+        this.priority = 5;
         this.hard = true;
-        this.weight = weight;
-    }
-
-    public GroupTimeslotResourceRestriction(Group group, Timeslot timeslot) {
-        this(group, timeslot, 5);
     }
 
     @Override
     public String warningString() {
+
         String warning = "Для группы " + group.getGroupNum() + " и таймслота " +
-                timeslot.toString() + " присвоено больше одной пары";
+                             timeslot.toString() + " присвоено больше одной пары";
         return warning;
     }
 
@@ -41,12 +38,12 @@ public class GroupTimeslotResourceRestriction extends RestrictionViolation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupTimeslotResourceRestriction that = (GroupTimeslotResourceRestriction) o;
-        return Objects.equals(group, that.group) &&
-                Objects.equals(timeslot, that.timeslot);
+        return Objects.equals(group.getId(), that.group.getId()) &&
+                Objects.equals(timeslot.getId(), that.timeslot.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(group, timeslot);
+        return Objects.hash(group.getId(), timeslot.getId());
     }
 }

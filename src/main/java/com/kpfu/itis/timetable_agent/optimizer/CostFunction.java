@@ -1,18 +1,19 @@
 package com.kpfu.itis.timetable_agent.optimizer;
 
-import com.kpfu.itis.timetable_agent.services.interfaces.ResourceRestrictionsService;
+import com.kpfu.itis.timetable_agent.analyzer.RestrictionsAnalyzer;
+import com.kpfu.itis.timetable_agent.models.Restriction;
+import com.kpfu.itis.timetable_agent.services.interfaces.GroupService;
 import com.kpfu.itis.timetable_agent.services.interfaces.RestrictionsService;
 import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class CostFunction {
 
-    private int C = 10;
+    //private int C = 10;
     private int hardViolationCount = 0;
     private double cost;
 
@@ -20,25 +21,23 @@ public class CostFunction {
     private RestrictionsService restrictionsService;
 
     @Autowired
-    private ResourceRestrictionsService resourceRestrictionsService;
+    private RestrictionsAnalyzer restrictionsAnalyzer;
+
+    @Autowired
+    private GroupService groupService;
 
     public double calculateTimetableCost(){
 
+        int C = 0;
+        List<Restriction> enabledSoftRestrictions = restrictionsService.getAllEnabledSoftRestrictions();
+        for (Restriction restriction: enabledSoftRestrictions){
+            C += restriction.getPriority();
+        }
+        C = C * groupService.getAllGroups().size();
+
         hardViolationCount = 0;
 
-        List<RestrictionViolation> dissatisfiedRestrictions = new ArrayList<>();
-
-        List<RestrictionViolation> dissatisfiedFactorRestrictions = restrictionsService.checkRestrictions();
-
-        if (dissatisfiedFactorRestrictions != null){
-            dissatisfiedRestrictions.addAll(dissatisfiedFactorRestrictions);
-        }
-
-        List<RestrictionViolation> dissatisfiedResourseRestrictions = resourceRestrictionsService.checkResourceRestrictions();
-
-        if (dissatisfiedResourseRestrictions != null){
-            dissatisfiedRestrictions.addAll(dissatisfiedResourseRestrictions);
-        }
+        List<RestrictionViolation> dissatisfiedRestrictions = restrictionsAnalyzer.getRestrictionsViolations();
 
         double hardCost = 0;
         double softCost = 0;

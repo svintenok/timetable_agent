@@ -1,5 +1,6 @@
 package com.kpfu.itis.timetable_agent.controllers;
 
+import com.kpfu.itis.timetable_agent.analyzer.RestrictionsAnalyzer;
 import com.kpfu.itis.timetable_agent.models.Restriction;
 import com.kpfu.itis.timetable_agent.optimizer.Optimizer;
 import com.kpfu.itis.timetable_agent.services.interfaces.AssignedPairService;
@@ -17,6 +18,9 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/optimizer")
 public class OptimizerController {
+
+    @Autowired
+    private RestrictionsAnalyzer restrictionsAnalyzer;
 
     @Autowired
     private CurrentTimetableService currentTimetableService;
@@ -107,7 +111,7 @@ public class OptimizerController {
 
 
     private void addViolationsInfo(ModelMap modelMap) {
-        violations = currentTimetableService.getRestrictionViolation();
+        violations = restrictionsAnalyzer.getRestrictionsViolations();
         hardCount = 0;
         softCount = 0;
         for (RestrictionViolation violation: violations){

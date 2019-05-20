@@ -16,6 +16,6 @@ public interface RestrictionsService {
     Operation getOperation(int id);
 
     List<Restriction> getAllRestrictions();
-    List<RestrictionViolation> checkRestrictions();
-    int[][] getOptionalCoursesChoices(StudyCourse course);
+    List<Restriction>  getAllEnabledRestrictions();
+    List<Restriction>  getAllEnabledSoftRestrictions();
 }

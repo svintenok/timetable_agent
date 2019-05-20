@@ -19,7 +19,7 @@ public class AuditoryTimeslotResourceRestriction extends RestrictionViolation {
         this.issue = issue;
 
         this.hard = true;
-        this.weight = 5;
+        this.priority = 5;
     }
 
     @Override

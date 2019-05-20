@@ -2,14 +2,11 @@ package com.kpfu.itis.timetable_agent.services.interfaces;
 
 import com.kpfu.itis.timetable_agent.models.AssignedPair;
 import com.kpfu.itis.timetable_agent.models.Group;
-import com.kpfu.itis.timetable_agent.util.exeptions.TimetableRestrictionsException;
 import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 
 import java.util.List;
 
 public interface CurrentTimetableService {
-
-    List<RestrictionViolation> getRestrictionViolation();
 
     List<AssignedPair> getGroupTimetable(Group group);
     void replacePair(AssignedPair replacementPair, AssignedPair offerPair);

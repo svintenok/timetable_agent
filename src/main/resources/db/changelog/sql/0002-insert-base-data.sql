@@ -181,7 +181,7 @@ INSERT INTO factor(name, sql_expression) VALUES ('максимальное ко�
                                                          AND (opt_subject_course_id IS null OR opt_subject_course_id = ANY ((SELECT opt_choice FROM parms)::int[]))
                                                      AND NOT pair.replacement)
                                                  SELECT MAX(seq_pair_count) FROM
-                                                 (SELECT COUNT(id) as seq_pair_count FROM
+                                                 (SELECT COUNT(timeslot) as seq_pair_count FROM
                                                  (SELECT timeslot, timeslot - ROW_NUMBER() OVER(ORDER BY timeslot) as diff FROM pair) pair_seq
                                                  GROUP BY diff) seq_pair_count;');
 
@@ -198,9 +198,11 @@ INSERT INTO factor(name, sql_expression) VALUES ('равномерность н�
                                                 GROUP BY timeslot_day) pair_counts;');
 
 
-INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Число окон в неделю не должно превышать двух', 1, 3, 2, FALSE, 5);--1
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Число окон в неделю не должно превышать пяти', 1, 3, 5, FALSE, 3);--1
 INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар в день не должно превышать шести', 2, 3, 6, TRUE, 5);--2
 INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар по курсу в день не должно превышать двух', 3, 3, 2, FALSE, 5);--3
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар подряд не должно превышать четырех', 6, 3, 4, FALSE, 3);--3
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Не должно быть единственной пары в день', 4, 1, 1, FALSE, 2);--3
 
 --1
 INSERT INTO resource_checking(name, sql_expression) VALUES ('group_timeslot',

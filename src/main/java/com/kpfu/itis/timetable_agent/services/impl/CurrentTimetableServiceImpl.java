@@ -4,14 +4,10 @@ import com.kpfu.itis.timetable_agent.models.AssignedPair;
 import com.kpfu.itis.timetable_agent.models.Group;
 import com.kpfu.itis.timetable_agent.repositories.AssignedPairRepository;
 import com.kpfu.itis.timetable_agent.services.interfaces.CurrentTimetableService;
-import com.kpfu.itis.timetable_agent.services.interfaces.ResourceRestrictionsService;
 import com.kpfu.itis.timetable_agent.services.interfaces.RestrictionsService;
-import com.kpfu.itis.timetable_agent.util.exeptions.TimetableRestrictionsException;
-import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,17 +19,6 @@ public class CurrentTimetableServiceImpl implements CurrentTimetableService{
     @Autowired
     private RestrictionsService restrictionsService;
 
-    @Autowired
-    private ResourceRestrictionsService resourceRestrictionsService;
-
-    @Override
-    public List<RestrictionViolation> getRestrictionViolation() {
-
-        List<RestrictionViolation> dissatisfiedRestrictions = new ArrayList<>();
-        dissatisfiedRestrictions.addAll(resourceRestrictionsService.checkResourceRestrictions());
-        dissatisfiedRestrictions.addAll(restrictionsService.checkRestrictions());
-        return dissatisfiedRestrictions;
-    }
 
     @Override
     public List<AssignedPair> getGroupTimetable(Group group) {
