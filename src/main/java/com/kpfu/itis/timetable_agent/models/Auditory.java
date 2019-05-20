@@ -7,8 +7,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,6 +25,16 @@ public class Auditory {
     @Column(name = "lecture_room")
     private boolean lectureRoom;
 
-    @OneToMany(mappedBy = "auditory")
-    private Set<AuditoryResource> AuditoryResource;
+    @OneToMany(mappedBy = "auditory", fetch=FetchType.EAGER)
+    private Set<AuditoryResource> auditoryResourcesList;
+
+    @Transient
+    public boolean hasResource(int day, int time){
+        for (AuditoryResource resource: auditoryResourcesList){
+            if (resource.getTimeslot().getTimeslotDay().getDayNum() == day &&
+                    resource.getTimeslot().getTimeslotTime().getPairNum() == time)
+                return true;
+        }
+        return false;
+    }
 }

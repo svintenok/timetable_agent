@@ -1,6 +1,6 @@
 package com.kpfu.itis.timetable_agent.controllers;
 
-import com.kpfu.itis.timetable_agent.util.parser.TimetableParser;
+import com.kpfu.itis.timetable_agent.parser.TimetableParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

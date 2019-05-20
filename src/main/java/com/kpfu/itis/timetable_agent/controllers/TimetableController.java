@@ -4,7 +4,7 @@ import com.kpfu.itis.timetable_agent.models.AssignedPair;
 import com.kpfu.itis.timetable_agent.models.Group;
 import com.kpfu.itis.timetable_agent.optimizer.Optimizer;
 import com.kpfu.itis.timetable_agent.services.interfaces.*;
-import com.kpfu.itis.timetable_agent.util.models.RestrictionViolation;
+import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

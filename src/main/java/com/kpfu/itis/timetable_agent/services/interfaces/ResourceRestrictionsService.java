@@ -1,6 +1,6 @@
 package com.kpfu.itis.timetable_agent.services.interfaces;
 
-import com.kpfu.itis.timetable_agent.util.models.RestrictionViolation;
+import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 
 import java.util.List;
 

@@ -1,13 +1,10 @@
 package com.kpfu.itis.timetable_agent.services.impl;
 
 import com.kpfu.itis.timetable_agent.models.*;
-import com.kpfu.itis.timetable_agent.repositories.GroupRepository;
-import com.kpfu.itis.timetable_agent.repositories.RestrictionRepository;
-import com.kpfu.itis.timetable_agent.repositories.StudyCourseRepository;
-import com.kpfu.itis.timetable_agent.repositories.SubjectCourseRepository;
+import com.kpfu.itis.timetable_agent.repositories.*;
 import com.kpfu.itis.timetable_agent.services.interfaces.RestrictionsService;
-import com.kpfu.itis.timetable_agent.util.models.FactorRestriction;
-import com.kpfu.itis.timetable_agent.util.models.RestrictionViolation;
+import com.kpfu.itis.timetable_agent.analyzer.models.FactorRestriction;
+import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -32,11 +29,29 @@ public class RestrictionsServiceImpl implements RestrictionsService {
     private SubjectCourseRepository subjectCourseRepository;
 
     @Autowired
+    private OperationRepository operationRepository;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void saveRestriction(Restriction restriction) {
-        restrictionRepository.save(restriction);
+    public Restriction getRestriction(int id) {
+        return restrictionRepository.getOne(id);
+    }
+
+    @Override
+    public Restriction saveRestriction(Restriction restriction) {
+        return restrictionRepository.save(restriction);
+    }
+
+    @Override
+    public List<Operation> getAllOperations() {
+        return operationRepository.findAll();
+    }
+
+    @Override
+    public Operation getOperation(int id) {
+        return operationRepository.getOne(id);
     }
 
     @Override

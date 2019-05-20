@@ -1,8 +1,8 @@
 package com.kpfu.itis.timetable_agent.services.impl;
 
+import com.kpfu.itis.timetable_agent.analyzer.models.*;
 import com.kpfu.itis.timetable_agent.models.*;
 import com.kpfu.itis.timetable_agent.repositories.*;
-import com.kpfu.itis.timetable_agent.services.interfaces.AssignedPairService;
 import com.kpfu.itis.timetable_agent.services.interfaces.ResourceRestrictionsService;
 import com.kpfu.itis.timetable_agent.services.interfaces.RestrictionsService;
 import com.kpfu.itis.timetable_agent.util.models.*;

@@ -1,6 +1,6 @@
 package com.kpfu.itis.timetable_agent.models;
 
-import com.kpfu.itis.timetable_agent.util.models.RestrictionViolation;
+import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 import lombok.*;
 
 import javax.persistence.*;

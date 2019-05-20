@@ -28,7 +28,7 @@
 
         <div class="col-md-9 themed-grid-col">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h3 class="h4" id="headText">Аудитории</h3>
+                <h3 class="h4" id="headText">Аудитория № ${auditory.number}</h3>
                 <div class="mb-2 mb-md-0">
                     <a href="#" class="btn btn-outline-dark"><i class="fa fa-times"></i>Удалить аудиторию</a>
                 </div>
@@ -37,7 +37,6 @@
 
             <form action="/data/auditories/${auditory.id}" method="POST">
 
-                <p>Аудитория № ${auditory.number}</p>
 
                 <table class="table">
                     <thead class="thead-light">
@@ -53,7 +52,11 @@
                     <tr>
                         <th scope="row">${time.interval}</th>
                         <#list day_timeslots as day>
-                            <td>${auditory}</td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="..." <#if auditory.hasResource(day.dayNum, time.pairNum)>checked</#if>
+                                </div>
+                            </td>
                         </#list>
                     </tr>
                     </#list>

@@ -1,4 +1,4 @@
-package com.kpfu.itis.timetable_agent.util.parser;
+package com.kpfu.itis.timetable_agent.parser;
 
 
 import com.kpfu.itis.timetable_agent.models.*;

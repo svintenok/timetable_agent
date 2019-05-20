@@ -1,4 +1,4 @@
-package com.kpfu.itis.timetable_agent.util.models;
+package com.kpfu.itis.timetable_agent.analyzer.models;
 
 import com.kpfu.itis.timetable_agent.models.Group;
 import com.kpfu.itis.timetable_agent.models.Timeslot;

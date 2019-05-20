@@ -3,7 +3,7 @@ package com.kpfu.itis.timetable_agent.services.interfaces;
 import com.kpfu.itis.timetable_agent.models.AssignedPair;
 import com.kpfu.itis.timetable_agent.models.Group;
 import com.kpfu.itis.timetable_agent.util.exeptions.TimetableRestrictionsException;
-import com.kpfu.itis.timetable_agent.util.models.RestrictionViolation;
+import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 
 import java.util.List;
 

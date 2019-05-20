@@ -16,6 +16,11 @@ public class FactorServiceImpl implements FactorService {
     private FactorRepository factorRepository;
 
     @Override
+    public Factor getFactor(int id) {
+        return factorRepository.getOne(id);
+    }
+
+    @Override
     public List<Factor> getAllFactors() {
         return factorRepository.findAll();
     }

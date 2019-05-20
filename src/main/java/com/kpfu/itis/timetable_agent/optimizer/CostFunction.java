@@ -2,7 +2,7 @@ package com.kpfu.itis.timetable_agent.optimizer;
 
 import com.kpfu.itis.timetable_agent.services.interfaces.ResourceRestrictionsService;
 import com.kpfu.itis.timetable_agent.services.interfaces.RestrictionsService;
-import com.kpfu.itis.timetable_agent.util.models.RestrictionViolation;
+import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
