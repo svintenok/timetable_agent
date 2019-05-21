@@ -38,8 +38,6 @@ public class Optimizer {
 
     ////////////////////
 
-    private List<Timeslot> timeslots;
-    private int timeslotCount;
     private List<AssignedPair> currentPairs;
     private int pairCount;
 
@@ -51,31 +49,33 @@ public class Optimizer {
 
     /////////////////////
 
-    int changesCost = 0;
+    private int changesCost = 0;
+    private int maxChangesCount = 10;
+    private int maxIterationsCount = 500;
+    //private int currentTimetableOffersCount;
 
-
-    public void optimizeTimetable(){
+    public void optimizeTimetable() {
 
         int iterationsCounter = 0;
 
-        currentPairs = assignedPairService.getCurrentTimetableWithOffers();
+        currentPairs = assignedPairService.getCurrentFreePairsWithOffers();
         pairCount = currentPairs.size();
 
-        timeslots = timeslotService.getAllTimeslots();
-        timeslotCount = timeslots.size();
-
-        currentCost = costFunction.calculateTimetableCost();
+        currentCost = costFunction.calculateTimetableCost(changesCost);
         currenHardViolations = costFunction.getHardViolationCount();
 
-        while (iterationsCounter < 50) {
+        while (iterationsCounter < maxIterationsCount  || currentCost == 0) {
             move(NeighborhoodStructure.get(random.nextInt(3) + 1));
 
-            double newCost = costFunction.calculateTimetableCost();
+            double newCost = costFunction.calculateTimetableCost(changesCost);
             double newHardViolations = costFunction.getHardViolationCount();
+            int changesCount = currentTimetableService.getCurrentTimetableOffersCount();
 
-            System.out.println(currentCost + "," + currenHardViolations + " ||| "+ newCost + ", " + newHardViolations);
+            System.out.println(currentCost + "," + currenHardViolations + " ||| " + newCost + ", " + newHardViolations);
 
-            if (newCost < currentCost) {
+            if ((currenHardViolations == 0 || newHardViolations < currenHardViolations) &&
+                    newCost < currentCost && changesCount <= maxChangesCount) {
+
                 acceptMove();
                 currentCost = newCost;
                 currenHardViolations = newHardViolations;
@@ -84,10 +84,9 @@ public class Optimizer {
                 rejectMove();
             }
 
-            iterationsCounter+= 1;
-            currentPairs = assignedPairService.getCurrentTimetableWithOffers();
+            iterationsCounter += 1;
+            currentPairs = assignedPairService.getCurrentFreePairsWithOffers();
         }
-
 
     }
 
@@ -137,13 +136,13 @@ public class Optimizer {
                 AssignedPair replacementPair = currentPairs.get(random.nextInt(pairCount));
                 replacementPair.setReplacement(true);
 
-                //to do free timeslot choosing
+                //free timeslot choosing
                 List<Timeslot> timeslots = timeslotService.getAllFreeByPairGroups(replacementPair);
                 int timeslotCount = timeslots.size();
                 Timeslot timeslot = timeslots.get(random.nextInt(timeslotCount));
 
-                //to do free auditory choosing
-                List<Auditory> auditories = auditoryService.getAllFreeByTimeslot(timeslot);
+                //free auditory choosing
+                List<Auditory> auditories = auditoryService.getAllFreeByTimeslotAndType(timeslot, replacementPair.getType().getType().equals("лекция"));
                 if (auditories.size() < 1) {
                     auditories = auditoryService.getAuditoryList();
                 }
@@ -170,7 +169,7 @@ public class Optimizer {
                 replacementPair3.setReplacement(true);
 
                 //to do free auditory choosing
-                List<Auditory> auditories3 = auditoryService.getAllFreeByTimeslot(replacementPair3.getTimeslot());
+                List<Auditory> auditories3 = auditoryService.getAllFreeByTimeslotAndType(replacementPair3.getTimeslot(), replacementPair3.getType().getType().equals("лекция"));
                 if (auditories3.size() < 1) {
                     auditories3 = auditoryService.getAuditoryList();
                 }

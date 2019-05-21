@@ -2,6 +2,7 @@ package com.kpfu.itis.timetable_agent.optimizer;
 
 import com.kpfu.itis.timetable_agent.analyzer.RestrictionsAnalyzer;
 import com.kpfu.itis.timetable_agent.models.Restriction;
+import com.kpfu.itis.timetable_agent.services.interfaces.CurrentTimetableService;
 import com.kpfu.itis.timetable_agent.services.interfaces.GroupService;
 import com.kpfu.itis.timetable_agent.services.interfaces.RestrictionsService;
 import com.kpfu.itis.timetable_agent.analyzer.models.RestrictionViolation;
@@ -26,7 +27,10 @@ public class CostFunction {
     @Autowired
     private GroupService groupService;
 
-    public double calculateTimetableCost(){
+    @Autowired
+    private CurrentTimetableService currentTimetableService;
+
+    public double calculateTimetableCost(int changesCost){
 
         int C = 0;
         List<Restriction> enabledSoftRestrictions = restrictionsService.getAllEnabledSoftRestrictions();
@@ -52,7 +56,7 @@ public class CostFunction {
 
         }
 
-        cost = hardCost * C + softCost;
+        cost = hardCost * C + softCost + changesCost * currentTimetableService.getCurrentTimetableOffersCount();
         return cost;
     }
 

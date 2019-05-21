@@ -17,4 +17,6 @@ public interface CurrentTimetableService {
 
     void applyOffers();
     void cancelOffers();
+
+    int getCurrentTimetableOffersCount();
 }

@@ -16,4 +16,6 @@ public interface AuditoryService {
 
     Auditory saveAuditory(Auditory auditory);
     void saveResource(AuditoryResource resource);
+
+    List<Auditory> getAllFreeByTimeslotAndType(Timeslot timeslot, boolean lectureRoom);
 }

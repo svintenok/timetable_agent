@@ -50,4 +50,9 @@ public class AuditoryServiceImpl implements AuditoryService{
     public void saveResource(AuditoryResource resource) {
         auditoryResourceRepository.save(resource);
     }
+
+    @Override
+    public List<Auditory> getAllFreeByTimeslotAndType(Timeslot timeslot, boolean lectureRoom) {
+        return auditoryRepository.getAllFreeByTimeslotByType(timeslot, lectureRoom);
+    }
 }

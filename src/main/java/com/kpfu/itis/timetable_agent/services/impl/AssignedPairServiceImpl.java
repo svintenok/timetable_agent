@@ -31,6 +31,11 @@ public class AssignedPairServiceImpl implements AssignedPairService {
     }
 
     @Override
+    public List<AssignedPair> getCurrentFreePairsWithOffers() {
+        return assignedPairRepository.getAllFreePairsWithOffers();
+    }
+
+    @Override
     public List<AssignedPair> getTimetableReplacements() {
         return assignedPairRepository.findAllByReplacement(true);
     }

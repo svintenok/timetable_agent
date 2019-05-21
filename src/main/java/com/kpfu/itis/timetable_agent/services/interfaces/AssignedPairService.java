@@ -9,6 +9,7 @@ public interface AssignedPairService {
     AssignedPair getPairById(int id);
 
     List<AssignedPair> getCurrentTimetableWithOffers();
+    List<AssignedPair> getCurrentFreePairsWithOffers();
     List<AssignedPair> getTimetableReplacements();
 
     AssignedPair save(AssignedPair assignedPair);

@@ -95,4 +95,9 @@ public class CurrentTimetableServiceImpl implements CurrentTimetableService{
             this.cancelReplacePair(pair);
         }
     }
+
+    @Override
+    public int getCurrentTimetableOffersCount() {
+        return assignedPairRepository.countByOffer(true);
+    }
 }

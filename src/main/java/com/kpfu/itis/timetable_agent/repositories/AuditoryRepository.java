@@ -20,4 +20,11 @@ public interface AuditoryRepository extends JpaRepository<Auditory, Integer> {
     List<Auditory> getAllFreeByTimeslot(@Param("t") Timeslot timeslot);
 
     Auditory findByNumber(String number);
+
+    @Query("SELECT a FROM Auditory a WHERE " +
+            "NOT EXISTS (SELECT pair FROM AssignedPair pair where pair.auditory = a AND " +
+            "pair.timeslot = :slot) AND " +
+            "EXISTS (SELECT ar FROM AuditoryResource ar where ar.auditory = a AND " +
+            "ar.timeslot = :slot) AND a.lectureRoom = :type")
+    List<Auditory> getAllFreeByTimeslotByType(@Param("slot") Timeslot timeslot, @Param("type") boolean lectureRoom);
 }

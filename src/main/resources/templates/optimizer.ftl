@@ -1,6 +1,10 @@
 <#include "base.ftl">
 <#macro title>Timetable Agent | Оптимизатор</#macro>
 
+<#macro links>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.css" integrity="sha256-jdZgwzG/YTTVCVs+8oG9il7UD/T5P1oaQ2S83BF1D8s=" crossorigin="anonymous" />
+</#macro>
+
 <#macro content>
 
 <div class="container-fluid">
@@ -18,6 +22,12 @@
 
             <p>Нарушения жестких ограничений: ${hardCount}</p>
             <p>Нарушения мягких ограничений: ${softCount}</p>
+
+            <p>Максимальное количество измененных пар: </p>
+            <input id="max_change_count" type="text" data-slider-min="1" data-slider-max="20" data-slider-step="1" data-slider-value="6" data-slider-enabled="false"/>
+
+            <input id="change_penalty_enabled" type="checkbox"/> Штраф за изменение
+            <input id="change_penalty" type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="3" data-slider-enabled="false"/>
 
             <div id="loading_alert" class="alert alert-primary" role="alert" style="display: none">
                 <div class="d-flex align-items-center">
@@ -87,24 +97,26 @@
 
 
 <#macro scripts>
-<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js" integrity="sha256-WzyQA5KtHvGY2wDq2tVFehwI8SnSjpoUahzv9QEPDCU=" crossorigin="anonymous"></script>
 
-    document.getElementById("optimize").addEventListener("click", function () {
+    <script>
 
-        $("#loading_alert").show();
+        document.getElementById("optimize").addEventListener("click", function () {
 
-        $.ajax({
-            data: {},
-            type: "POST",
-            url: "/optimizer/optimize",
-            async: true,
-            success: function (result) {
-                var link = "/optimizer/result";
-                $(location).attr('href', link);
-            }
+            $("#loading_alert").show();
+
+            $.ajax({
+                data: {},
+                type: "POST",
+                url: "/optimizer/optimize",
+                async: true,
+                success: function (result) {
+                    var link = "/optimizer/result";
+                    $(location).attr('href', link);
+                }
+            });
         });
-    });
 
 
-</script>
+    </script>
 </#macro>

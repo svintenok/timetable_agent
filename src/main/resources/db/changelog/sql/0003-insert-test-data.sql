@@ -263,7 +263,7 @@ WHERE (pair.study_group_id=(SELECT group_id FROM parms)
         AND (opt_subject_course_id IS null OR opt_subject_course_id = ANY ((SELECT opt_choice FROM parms)::int[]))
 		AND NOT pair.replacement)
 SELECT MAX(seq_pair_count) FROM
-(SELECT COUNT(timeslot) as seq_pair_count FROM
+(SELECT COUNT(timeslotbv, l) as seq_pair_count FROM
 (SELECT timeslot, timeslot - ROW_NUMBER() OVER(ORDER BY timeslot) as diff FROM pair) pair_seq
 GROUP BY diff) seq_pair_count;');
 

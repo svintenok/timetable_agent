@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 public interface AssignedPairRepository extends JpaRepository<AssignedPair, Integer> {
 
-    //AND NOT pair.replacement
-    //OR (:g) IN (pair.groups)
-    //OR (:g) IN (SELECT gs.group FROM GroupSet gs where gs=pair.groupSet)
     @Query("SELECT pair FROM AssignedPair pair WHERE pair.group = :g " +
             "OR :g IN (SELECT gsg.group FROM GroupSetGroup gsg where gsg.groupSet=pair.groupSet) AND pair.replacement=false ORDER BY pair.timeslot")
     List<AssignedPair> getAllPairByGroup(@Param("g") Group g);
@@ -22,4 +19,10 @@ public interface AssignedPairRepository extends JpaRepository<AssignedPair, Inte
     List<AssignedPair> findAllByReplacement(boolean replacement);
 
     AssignedPair findByAssignedPairOffer(AssignedPair pairOffer);
+
+    int countByOffer(boolean offer);
+
+    @Query("SELECT pair FROM AssignedPair pair WHERE " +
+            "pair.professor is not null AND pair.replacement=false")
+    List<AssignedPair> getAllFreePairsWithOffers();
 }
