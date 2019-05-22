@@ -1,5 +1,6 @@
 package com.kpfu.itis.timetable_agent.controllers;
 
+import com.kpfu.itis.timetable_agent.analyzer.RestrictionsAnalyzer;
 import com.kpfu.itis.timetable_agent.parser.TimetableParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class UploaderController {
     @Autowired
     private TimetableParser timetableParser;
 
+    @Autowired
+    private RestrictionsAnalyzer restrictionsAnalyzer;
+
     @GetMapping("")
     public String getUploadPage(ModelMap modelMap) {
         return "upload_timetable";
@@ -33,6 +37,7 @@ public class UploaderController {
             e.printStackTrace();
         }
 
+        restrictionsAnalyzer.checkRestrictionsViolations();
         return "redirect:/current_timetable/groups";
     }
 }

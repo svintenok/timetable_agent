@@ -16,11 +16,23 @@ public class RestrictionsAnalyzer {
 	@Autowired
 	private ResourcesRestrictionsAnalyzer resourcesRestrictionsAnalyzer;
 
-	public List<RestrictionViolation> getRestrictionsViolations() {
+	//////////////////////////////////////
 
-		List<RestrictionViolation> dissatisfiedRestrictions = new ArrayList<>();
-		dissatisfiedRestrictions.addAll(resourcesRestrictionsAnalyzer.checkResourceRestrictions());
-		dissatisfiedRestrictions.addAll(factorRestrictionsAnalyzer.checkRestrictions());
-		return dissatisfiedRestrictions;
+	private List<RestrictionViolation> restrictionsViolations;
+
+	public List<RestrictionViolation> checkRestrictionsViolations() {
+
+		restrictionsViolations = new ArrayList<>();
+		restrictionsViolations.addAll(resourcesRestrictionsAnalyzer.checkResourceRestrictions());
+		restrictionsViolations.addAll(factorRestrictionsAnalyzer.checkRestrictions());
+
+		return restrictionsViolations;
+	}
+
+	public List<RestrictionViolation> getRestrictionsViolations() {
+		if (restrictionsViolations == null) {
+			return checkRestrictionsViolations();
+		}
+		return restrictionsViolations;
 	}
 }

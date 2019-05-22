@@ -41,7 +41,7 @@ public class CostFunction {
 
         hardViolationCount = 0;
 
-        List<RestrictionViolation> dissatisfiedRestrictions = restrictionsAnalyzer.getRestrictionsViolations();
+        List<RestrictionViolation> dissatisfiedRestrictions = restrictionsAnalyzer.checkRestrictionsViolations();
 
         double hardCost = 0;
         double softCost = 0;

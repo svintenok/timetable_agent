@@ -50,8 +50,8 @@ public class Optimizer {
     /////////////////////
 
     private int changesCost = 0;
-    private int maxChangesCount = 10;
-    private int maxIterationsCount = 500;
+    private int maxChangesCount = 8;
+    private int maxIterationsCount = 600;
     //private int currentTimetableOffersCount;
 
     public void optimizeTimetable() {
@@ -71,7 +71,8 @@ public class Optimizer {
             double newHardViolations = costFunction.getHardViolationCount();
             int changesCount = currentTimetableService.getCurrentTimetableOffersCount();
 
-            System.out.println(currentCost + "," + currenHardViolations + " ||| " + newCost + ", " + newHardViolations);
+            System.out.println(currentCost + "," + currenHardViolations + " ||| " + newCost + ", " + newHardViolations +
+                               ", iteration " + iterationsCounter);
 
             if ((currenHardViolations == 0 || newHardViolations < currenHardViolations) &&
                     newCost < currentCost && changesCount <= maxChangesCount) {

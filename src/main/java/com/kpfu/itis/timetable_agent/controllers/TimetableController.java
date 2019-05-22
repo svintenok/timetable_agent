@@ -119,6 +119,7 @@ public class TimetableController {
 
         currentTimetableService.replacePair(replacementPair, offerPair);
         redirectAttributes.addFlashAttribute("action", "offer");
+        restrictionsAnalyzer.checkRestrictionsViolations();
 
         return "redirect:/current_timetable/change/" + pairId;
     }
@@ -143,6 +144,7 @@ public class TimetableController {
         AssignedPair replacementPair = assignedPairService.getPairById(pairId);
         currentTimetableService.cancelReplacePair(replacementPair);
         redirectAttributes.addFlashAttribute("action", "cancel");
+        restrictionsAnalyzer.checkRestrictionsViolations();
 
         return "redirect:/current_timetable/change/" + pairId;
     }

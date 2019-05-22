@@ -1,12 +1,2 @@
-body {
-    font-size: .875rem;
-}
-
-body {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-.navbar {
-    margin-bottom: 20px;
-}
+.slider.slider-horizontal .tooltip.tooltip-main.in,
+.slider.slider-vertical .tooltip.tooltip-main.in { opacity: 1 !important; }

@@ -70,6 +70,11 @@
                     <h5 class="mb-1">${pair.subjectCourse.name}<#if pair.type.type="курс по выбору">: ${pair.optionalCourseSubject.name}</#if></h5>
                     <br>
                     <div class="container borber">
+                        <#if pair.group??>
+                            <p>Группа: ${pair.group.groupNum}</p>
+                                                <#else>
+                            <p>Группы: ${pair.groupSet.toString()}</p>
+                        </#if>
                         <#if pair.type.type != "физкультура">
                             <p>Профессор: ${pair.professor.name}</p>
                         </#if>
