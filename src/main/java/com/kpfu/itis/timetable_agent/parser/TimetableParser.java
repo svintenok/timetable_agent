@@ -68,7 +68,7 @@ public class TimetableParser {
             groupService.saveGroupSet(groupSet);
 
             JSONArray groupSetGroups = groupSetJSON.getJSONArray("groupsList");
-            Set<Group> groupsList = new HashSet<>();
+            List<Group> groupsList = new ArrayList<>();
             for (int j = 0; j < groupSetGroups.length(); j++) {
                 Group group = groupService.getGroupByNum(groupSetGroups.getString(j));
                 groupsList.add(group);

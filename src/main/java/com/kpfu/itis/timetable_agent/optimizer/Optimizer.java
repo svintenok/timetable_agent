@@ -51,7 +51,7 @@ public class Optimizer {
 
     private int changesCost = 0;
     private int maxChangesCount = 8;
-    private int maxIterationsCount = 600;
+    private int maxIterationsCount = 1;
     //private int currentTimetableOffersCount;
 
     public void optimizeTimetable() {

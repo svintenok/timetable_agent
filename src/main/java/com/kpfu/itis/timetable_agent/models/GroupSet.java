@@ -3,6 +3,7 @@ package com.kpfu.itis.timetable_agent.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,7 +27,7 @@ public class GroupSet {
             name = "group_set_group",
             joinColumns = @JoinColumn(name = "group_set_id"),
             inverseJoinColumns = @JoinColumn(name = "study_group_id"))
-    private Set<Group> groups;
+    private List<Group> groups;
 
     @Override
     public String toString() {

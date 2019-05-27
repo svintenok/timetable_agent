@@ -280,10 +280,10 @@ AND NOT replacement
 GROUP BY timeslot_day) pair_counts;');
 
 
-INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Число окон в неделю не должно превышать двух', 1, 3, 2, FALSE, 5);--1
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Число окон в неделю не должно превышать пяти', 1, 3, 5, FALSE, 3);--1
 INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар в день не должно превышать шести', 2, 3, 6, TRUE, 5);--2
 INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар по курсу в день не должно превышать двух', 3, 3, 2, FALSE, 5);--3
-
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('ЧИсло окон подряд не должно превышать двух', 5, 3, 2, FALSE, 3);--3
 --1
 INSERT INTO resource_checking(name, sql_expression) VALUES ('group_timeslot',
 'WITH parms as (select ? as group_id)
