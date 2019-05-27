@@ -121,7 +121,7 @@ public class TimetableController {
         redirectAttributes.addFlashAttribute("action", "offer");
         restrictionsAnalyzer.checkRestrictionsViolations();
 
-        return "redirect:/current_timetable/change/" + pairId;
+        return "redirect:/current_timetable/change/" + replacementPair.getId().toString();
     }
 
 
@@ -134,7 +134,7 @@ public class TimetableController {
         replacementPair = currentTimetableService.replacePairHard(replacementPair);
         redirectAttributes.addFlashAttribute("action", "save");
 
-        return "redirect:/current_timetable/change/" + replacementPair.getId();
+        return "redirect:/current_timetable/change/" + replacementPair.getId().toString();
     }
 
     @PostMapping("/change/{pair}/cancel")
@@ -146,7 +146,7 @@ public class TimetableController {
         redirectAttributes.addFlashAttribute("action", "cancel");
         restrictionsAnalyzer.checkRestrictionsViolations();
 
-        return "redirect:/current_timetable/change/" + pairId;
+        return "redirect:/current_timetable/change/" + replacementPair.getId().toString();
     }
 
     private void addViolationsInfo(ModelMap modelMap) {

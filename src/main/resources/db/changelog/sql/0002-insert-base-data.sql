@@ -166,7 +166,7 @@ INSERT INTO factor(name, sql_expression) VALUES ('максимальное ко�
                                                          AND (opt_subject_course_id IS null OR opt_subject_course_id = ANY ((SELECT opt_choice FROM parms)::int[]))
                                                          AND not next_pair.replacement AND next_pair.timeslot_day = cur_timeslot.timeslot_day
                                                          AND next_pair.timeslot_time > cur_timeslot.timeslot_time))
-                                                 SELECT MAX(seq_pair_windows_count) FROM
+                                                 SELECT COALESCE(MAX(seq_pair_windows_count), 0) FROM
                                                  (SELECT COUNT(id) as seq_pair_windows_count FROM
                                                  (SELECT id, id - ROW_NUMBER() OVER(ORDER BY id) as diff FROM pair_window) win_seq
                                                  GROUP BY diff) seq_pair_windows_count');
@@ -201,8 +201,9 @@ INSERT INTO factor(name, sql_expression) VALUES ('равномерность н�
 INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Число окон в неделю не должно превышать пяти', 1, 3, 5, FALSE, 3);--1
 INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар в день не должно превышать шести', 2, 3, 6, TRUE, 5);--2
 INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар по курсу в день не должно превышать двух', 3, 3, 2, FALSE, 5);--3
-INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар подряд не должно превышать четырех', 6, 3, 4, FALSE, 3);--3
-INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Не должно быть единственной пары в день', 4, 1, 1, FALSE, 2);--3
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число пар подряд не должно превышать четырех', 6, 3, 4, FALSE, 3);--4
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Не должно быть единственной пары в день', 4, 1, 1, FALSE, 2);--5
+INSERT INTO restriction(name, factor_id, operation_id, restriction_value, hard, priority) VALUES ('Максимальное число окон подряд не должно превышать двух', 5, 3, 2, FALSE, 4);--6
 
 --1
 INSERT INTO resource_checking(name, sql_expression) VALUES ('group_timeslot',
