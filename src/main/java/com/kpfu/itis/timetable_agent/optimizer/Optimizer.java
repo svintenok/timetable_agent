@@ -50,8 +50,9 @@ public class Optimizer {
     /////////////////////
 
     private int changesCost = 0;
-    private int maxChangesCount = 8;
-    private int maxIterationsCount = 1;
+    private int maxChangesCount = 15;
+    private int maxIterationsCount = 400;
+    
     //private int currentTimetableOffersCount;
 
     public void optimizeTimetable() {
@@ -97,12 +98,14 @@ public class Optimizer {
                 //to do free room choosing?
                 AssignedPair replacementPair1 = currentPairs.get(random.nextInt(pairCount));
                 replacementPair1.setReplacement(true);
+                boolean isLecture1 = replacementPair1.getType().getType().equals("лекция");
 
                 AssignedPair replacementPair2 = currentPairs.get(random.nextInt(pairCount));
                 while (replacementPair2.getId() == replacementPair1.getId()){
                     replacementPair2 = currentPairs.get(random.nextInt(pairCount));
                 }
                 replacementPair2.setReplacement(true);
+                boolean isLecture2 = replacementPair1.getType().getType().equals("лекция");
 
 
                 AssignedPair offerPair1 = (AssignedPair) replacementPair1.clone();
@@ -110,7 +113,21 @@ public class Optimizer {
                 offerPair1.setTimeslot(replacementPair2.getTimeslot());
                 offerPair1.setTimeslotDay(replacementPair2.getTimeslotDay());
                 offerPair1.setTimeslotTime(replacementPair2.getTimeslotTime());
-                offerPair1.setAuditory(replacementPair2.getAuditory());//?
+                if (isLecture1 == isLecture2) {
+                    offerPair1.setAuditory(replacementPair2.getAuditory());
+                }
+                else {
+                    List<Auditory> auditories = auditoryService.getAllFreeByTimeslotAndType(replacementPair1.getTimeslot(),
+                                                                                            isLecture1);
+                    if (auditories.size() < 1) {
+                        auditories = auditoryService.getAuditoryList();
+                    }
+                    int auditoriesCount = auditories.size();
+                    Auditory auditory = auditories.get(random.nextInt(auditoriesCount));
+                    offerPair1.setAuditory(auditory);
+                }
+
+
                 offerPair1.setOffer(true);
                 offerPair1 = assignedPairService.save(offerPair1);
 
@@ -122,9 +139,22 @@ public class Optimizer {
                 offerPair2.setTimeslot(replacementPair1.getTimeslot());
                 offerPair2.setTimeslotDay(replacementPair1.getTimeslotDay());
                 offerPair2.setTimeslotTime(replacementPair1.getTimeslotTime());
-                offerPair2.setAuditory(replacementPair1.getAuditory());//?
+
                 offerPair2.setOffer(true);
                 offerPair2 = assignedPairService.save(offerPair2);
+                if (isLecture1 == isLecture2) {
+                    offerPair2.setAuditory(replacementPair1.getAuditory());//?
+                }
+                else {
+                    List<Auditory> auditories1 = auditoryService.getAllFreeByTimeslotAndType(replacementPair1.getTimeslot(),
+                                                                                            isLecture1);
+                    if (auditories1.size() < 1) {
+                        auditories1 = auditoryService.getAuditoryList();
+                    }
+                    int auditoriesCount1 = auditories1.size();
+                    Auditory auditory1 = auditories1.get(random.nextInt(auditoriesCount1));
+                    offerPair2.setAuditory(auditory1);
+                }
 
                 replacementPair2.setAssignedPairOffer(offerPair2);
                 replacementPair2 = assignedPairService.save(replacementPair2);
@@ -143,20 +173,20 @@ public class Optimizer {
                 Timeslot timeslot = timeslots.get(random.nextInt(timeslotCount));
 
                 //free auditory choosing
-                List<Auditory> auditories = auditoryService.getAllFreeByTimeslotAndType(timeslot, replacementPair.getType().getType().equals("лекция"));
-                if (auditories.size() < 1) {
-                    auditories = auditoryService.getAuditoryList();
+                List<Auditory> auditories2 = auditoryService.getAllFreeByTimeslotAndType(timeslot, replacementPair.getType().getType().equals("лекция"));
+                if (auditories2.size() < 1) {
+                    auditories2 = auditoryService.getAuditoryList();
                 }
-                int auditoriesCount = auditories.size();
+                int auditoriesCount2 = auditories2.size();
 
-                Auditory auditory = auditories.get(random.nextInt(auditoriesCount));
+                Auditory auditory2 = auditories2.get(random.nextInt(auditoriesCount2));
 
                 AssignedPair offerPair = (AssignedPair) replacementPair.clone();
 
                 offerPair.setTimeslot(timeslot);
                 offerPair.setTimeslotDay(timeslot.getTimeslotDay());
                 offerPair.setTimeslotTime(timeslot.getTimeslotTime());
-                offerPair.setAuditory(auditory);
+                offerPair.setAuditory(auditory2);
                 offerPair.setOffer(true);
                 offerPair = assignedPairService.save(offerPair);
 

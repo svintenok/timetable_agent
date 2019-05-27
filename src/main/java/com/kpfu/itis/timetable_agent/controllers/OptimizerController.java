@@ -111,7 +111,7 @@ public class OptimizerController {
 
 
     private void addViolationsInfo(ModelMap modelMap) {
-        violations = restrictionsAnalyzer.getRestrictionsViolations();
+        violations = restrictionsAnalyzer.checkRestrictionsViolations();
         hardCount = 0;
         softCount = 0;
         for (RestrictionViolation violation: violations){
